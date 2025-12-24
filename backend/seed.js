@@ -4,7 +4,7 @@ const Villa = require('./models/VillaModel');
 
 const villas = [
   {
-    name: "Villa Luna",
+    name: "Villa Cia",
     description: "A serene getaway with modern Mediterranean architecture and a private infinity pool.",
     price: 450,
     bedrooms: 3,

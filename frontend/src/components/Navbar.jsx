@@ -18,7 +18,7 @@ const Navbar = () => {
 							<Link to="/villas" className="text-gray-700 hover:text-gray-900 transition-colors">
 								Villas
 							</Link>
-							<a href="#bulletin" className="text-gray-700 hover:text-gray-900 transition-colors">
+							<a href="/bulletin" className="text-gray-700 hover:text-gray-900 transition-colors">
 								Bulletin
 							</a>
 							<Link to="/location" className="text-gray-700 hover:text-gray-900 transition-colors">
