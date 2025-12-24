@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // Pages & Components
 import Home from './pages/Home';
 import Navbar from './components/Navbar';
+import Villas from './pages/Villas'; // Import your new page
 
 function App() {
 	return (
@@ -15,6 +16,7 @@ function App() {
 							path="/" 
 							element={<Home />} 
 						/>
+                        <Route path="/villas" element={<Villas />} />
 						{/* We will add your Admin route here later */}
 					</Routes>
 				</div>
