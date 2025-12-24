@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { HeroBookingWidget } from './HeroBookingWidget'
 // If you don't have these components yet, I've added a fallback below
 // import { HeroBookingWidget } from './HeroBookingWidget'; 
 
@@ -48,10 +49,7 @@ export function Hero() {
           </div>
 
           {/* Booking Widget Placeholder */}
-          <div className="w-full max-w-4xl mx-auto mt-12 bg-white/10 backdrop-blur-md p-6 rounded-lg border border-white/20">
-             <p className="text-white text-center italic">Check Availability Widget coming soon...</p>
-             {/* Once you create HeroBookingWidget.jsx, uncomment the import and use <HeroBookingWidget /> here */}
-          </div>
+          <HeroBookingWidget/>
         </div>
       </div>
     </section>
