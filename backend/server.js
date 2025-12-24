@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 const villaRoutes = require('./routes/villaRoutes');
+const bookingRoutes = require('./routes/bookingRoutes'); // Add th
 
 const app = express();
 
@@ -10,11 +11,9 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // Essential for guest checkout data
 app.use('/api/villas', villaRoutes);
+app.use('/api/bookings', bookingRoutes); // Add this
 
-
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});     
+  
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
