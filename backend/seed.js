@@ -9,7 +9,7 @@ const villas = [
     price: 450,
     bedrooms: 3,
     bathrooms: 2,
-    image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80",
+    image: "/casa1.jpg",
     isAvailable: true
   },
   {
@@ -18,7 +18,7 @@ const villas = [
     price: 600,
     bedrooms: 4,
     bathrooms: 3,
-    image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=80",
+    image: "/casa2.jpg",
     isAvailable: true
   }
 ];
