@@ -1,20 +1,21 @@
+const cookieParser = require('cookie-parser');
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 const villaRoutes = require('./routes/villaRoutes');
 const bookingRoutes = require('./routes/bookingRoutes'); // Add th
+const { generalLimiter, bookingLimiter } = require('./middleware/rateLimiter');
 
 const app = express();
 
 // Middleware
 app.use(cors());
-app.use(express.json()); // Essential for guest checkout data
+app.use(express.json());
+ // Essential for guest checkout data
+app.use(generalLimiter);
 app.use('/api/villas', villaRoutes);
-app.use('/api/bookings', bookingRoutes); // Add this
-
-  
-
+app.use('/api/bookings', bookingLimiter, bookingRoutes);
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ Database Connected"))
