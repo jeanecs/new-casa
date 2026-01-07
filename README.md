@@ -1,6 +1,15 @@
+
 # Casa Booking MERN Project
 
 This is a full-stack villa booking application built with the MERN stack (MongoDB, Express.js, React, Node.js).
+
+## Recent Updates
+
+- **Rate Limiting:** Added express-rate-limit with Redis (Upstash) for distributed rate limiting. Booking endpoints are limited to 5 requests every 10 seconds.
+- **Redis Integration:** Backend uses Upstash Redis for rate limiting.
+- **Body Parsing:** Ensured express.json() middleware is used for proper request body parsing.
+- **Error Fixes:** Addressed issues with missing dependencies and request body handling.
+- **Authentication:** Added admin authentication for protected routes and admin actions.
 
 ## Project Structure
 
@@ -10,6 +19,7 @@ new Casa/
 │   ├── controllers/   # Route controllers
 │   ├── models/        # Mongoose models
 │   ├── routes/        # API routes
+│   ├── middleware/    # Custom middleware (rate limiting, authentication, etc.)
 │   ├── server.js      # Main server file
 │   ├── seed.js        # Seed data script
 │   └── ...
@@ -42,11 +52,18 @@ new Casa/
    ```bash
    npm install
    ```
-3. Create a `.env` file with your MongoDB URI:
+3. Create a `.env` file with your environment variables:
    ```env
-   MONGODB_URI=your_mongodb_connection_string
+   MONGO_URI=your_mongodb_connection_string
+   REDIS_URL=your_upstash_redis_url
    PORT=5000
+   ADMIN_EMAIL=your_admin_email
+   ADMIN_PASSWORD=your_admin_password
    ```
+   - **MONGO_URI**: Your MongoDB connection string
+   - **REDIS_URL**: Your Upstash Redis connection string
+   - **PORT**: Port for backend server (default: 5000)
+   - **ADMIN_EMAIL/ADMIN_PASSWORD**: Credentials for admin authentication
 4. (Optional) Seed the database:
    ```bash
    node seed.js
@@ -86,6 +103,7 @@ new Casa/
 - **backend/controllers/**: API logic for bookings and villas
 - **backend/models/**: Mongoose schemas
 - **backend/routes/**: API endpoints
+- **backend/middleware/**: Custom middleware (rate limiting, authentication, etc.)
 - **frontend/src/components/**: Reusable React components
 - **frontend/src/pages/**: Main app pages
 

@@ -9,9 +9,13 @@ const { generalLimiter, bookingLimiter } = require('./middleware/rateLimiter');
 const adminRoutes = require('./routes/adminRoutes');
 
 const app = express();
+const corsOptions = {
+  origin: 'http://localhost:5173', // Your frontend URL
+  credentials: true,               // Allows cookies to be sent
+};
 
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser()); // Allows your app to "see" the auth cookies
 
