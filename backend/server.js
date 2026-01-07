@@ -6,16 +6,20 @@ require('dotenv').config();
 const villaRoutes = require('./routes/villaRoutes');
 const bookingRoutes = require('./routes/bookingRoutes'); // Add th
 const { generalLimiter, bookingLimiter } = require('./middleware/rateLimiter');
+const adminRoutes = require('./routes/adminRoutes');
 
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser()); // Allows your app to "see" the auth cookies
+
  // Essential for guest checkout data
 app.use(generalLimiter);
 app.use('/api/villas', villaRoutes);
 app.use('/api/bookings', bookingLimiter, bookingRoutes);
+app.use('/api/admin', adminRoutes);
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ Database Connected"))
