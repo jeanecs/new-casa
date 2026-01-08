@@ -10,6 +10,8 @@ This is a full-stack villa booking application built with the MERN stack (MongoD
 - **Body Parsing:** Ensured express.json() middleware is used for proper request body parsing.
 - **Error Fixes:** Addressed issues with missing dependencies and request body handling.
 - **Authentication:** Added admin authentication for protected routes and admin actions.
+- **Cookie & Session Handling:** Backend now uses httpOnly cookies for admin authentication. CORS and cookie-parser are configured for secure cross-origin requests.
+- **Protected Routes:** Admin dashboard and sensitive endpoints are protected both on the backend (middleware) and frontend (React protected route/component).
 
 ## Project Structure
 
@@ -36,6 +38,8 @@ new Casa/
 - RESTful API for bookings and villas
 - Modern UI with Tailwind CSS
 - Responsive design
+- Admin authentication with JWT & httpOnly cookies
+- Protected admin dashboard and API endpoints
 
 ## Getting Started
 
@@ -100,12 +104,12 @@ new Casa/
 - **Tailwind CSS**: Styling
 
 ## Folder Details
-- **backend/controllers/**: API logic for bookings and villas
-- **backend/models/**: Mongoose schemas
-- **backend/routes/**: API endpoints
-- **backend/middleware/**: Custom middleware (rate limiting, authentication, etc.)
-- **frontend/src/components/**: Reusable React components
-- **frontend/src/pages/**: Main app pages
+- **backend/controllers/**: API logic for bookings, villas, and admin
+- **backend/models/**: Mongoose schemas (Admin, Booking, Villa)
+- **backend/routes/**: API endpoints (including adminRoutes for authentication)
+- **backend/middleware/**: Custom middleware (rate limiting, authentication, cookie/session handling)
+- **frontend/src/components/**: Reusable React components (including ProtectedRoute for admin pages)
+- **frontend/src/pages/**: Main app pages (AdminLogin, AdminDashboard, etc.)
 
 ## License
 MIT
