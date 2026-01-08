@@ -21,7 +21,7 @@ const AdminSidebar = () => {
     const baseStyle = "cursor-pointer hover:text-casa-gold transition-all duration-300 block";
 
     return (
-        <div className="w-64 min-h-screen bg-casa-charcoal text-white p-8 flex flex-col justify-between fixed">
+        <div className="w-64 min-h-screen bg-casa-charcoal text-black p-8 flex flex-col justify-between fixed">
             <div>
                 <h2 className="text-2xl font-serif-display mb-10 text-casa-gold tracking-tighter">Casa Filomena</h2>
                 
