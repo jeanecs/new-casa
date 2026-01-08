@@ -6,7 +6,7 @@ import Navbar from './components/Navbar';
 import Villas from './pages/Villas'; // Import your new page
 import AdminLogin from './pages/AdminLogin'; // 1. Import the new page\import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard'; // Ensure this exists!
-
+import ProtectedRoute from './components/ProtectedRoute';
 
 function AppContent() {
     const location = useLocation();
@@ -25,7 +25,14 @@ function AppContent() {
                     <Route path="/villas" element={<Villas />} />
                     <Route path="/admin" element={<AdminLogin />} />
                     {/* Future dashboard route */}
-                    <Route path="/admin-dashboard" element={<AdminDashboard />} />
+                    <Route 
+                        path="/admin-dashboard" 
+                        element={
+                            <ProtectedRoute>
+                                <AdminDashboard />
+                            </ProtectedRoute>
+                        } 
+                    />
                 </Routes>
             </div>
         </>

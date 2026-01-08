@@ -1,26 +1,34 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useContext } from 'react';
+import { AppContext } from '../context/AppContext';
+import { useNavigate } from 'react-router-dom'; // Add this import
 
 const AdminLogin = () => {
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const { setIsAdminLoggedIn } = useContext(AppContext);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // We use the backend URL we tested in Postman
-            const { data } = await axios.post('http://localhost:5000/api/admin/login', 
+            const { data } = await axios.post(
+                'http://localhost:5000/api/admin/login', 
                 { email, password },
-                { withCredentials: true } // THIS IS VITAL for HttpOnly cookies!
+                { withCredentials: true } 
             );
             
             if (data.success) {
-                // Redirect to the dashboard (we'll build this next)
-                window.location.href = '/admin-dashboard';
+                setIsAdminLoggedIn(true); // 2. Tell the app we are logged in!
+                navigate('/admin-dashboard');
             }
         } catch (err) {
-            alert(err.response?.data?.message || "Authentication failed");
+            console.error("Login Error Object:", err.response);
+            alert(err.response?.data?.message || "Invalid Credentials");
         }
     };
 
