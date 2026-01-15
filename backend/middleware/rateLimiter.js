@@ -6,9 +6,9 @@ const bookingLimiter = rateLimit({
   store: new RedisStore({
     sendCommand: (...args) => redisClient.sendCommand(args),
   }),
-  windowMs: 15 * 60 * 1000, 
+  windowMs: 10 * 1000, 
   max: 5, 
-  message: { message: "Too many booking attempts. Please try again in 15 minutes." }
+  message: { message: "Too many booking attempts. Please try again in 10 seconds." }
 });
 
 const generalLimiter = rateLimit({

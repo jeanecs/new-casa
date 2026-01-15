@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { createBooking } = require('../controllers/BookingController');
+const { createBooking, getAllBookings, updateBookingStatus } = require('../controllers/BookingController');
 const { createClient } = require('redis');
-
+const userAuth = require('../middleware/auth');
 
 // 1. Initialize the Redis Client
 const redisClient = createClient({
@@ -47,5 +47,7 @@ router.delete('/release-hold', async (req, res) => {
 
 // 3. The Final Booking Route
 router.post('/', createBooking);
+router.get('/admin/all', userAuth, getAllBookings);
+router.patch('/admin/update/:id', userAuth, updateBookingStatus);
 
 module.exports = router;
