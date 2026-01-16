@@ -22,7 +22,7 @@ app.use(cookieParser()); // Allows your app to "see" the auth cookies
  // Essential for guest checkout data
 app.use(generalLimiter);
 app.use('/api/villas', villaRoutes);
-app.use('/api/bookings', bookingLimiter, bookingRoutes);
+app.use('/api/bookings', bookingRoutes);
 app.use('/api/admin', adminRoutes);
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)

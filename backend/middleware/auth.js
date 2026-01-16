@@ -18,7 +18,7 @@ const userAuth = async (req, res, next) => {
 
         // 4. Attach the user ID to the request for the next function to use
         if (decodedToken.id) {
-            req.body.userId = decodedToken.id;
+            req.userId = decodedToken.id; // Changed from req.body.userId
         } else {
             return res.status(401).json({ success: false, message: "Invalid Token." });
         }

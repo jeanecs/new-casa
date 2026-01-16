@@ -47,7 +47,6 @@ router.delete('/release-hold', async (req, res) => {
 
 // 3. The Final Booking Route
 router.post('/create', createBooking);
-router.get('/',  getAllBookings);
-router.patch('/admin/update/:id', userAuth, updateBookingStatus);
-
+router.get('/', userAuth,  getAllBookings);
+router.patch('/:id', userAuth, updateBookingStatus);
 module.exports = router;
