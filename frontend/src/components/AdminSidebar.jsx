@@ -27,14 +27,14 @@ const AdminSidebar = () => {
                 
                 <nav className="space-y-8 text-xs uppercase tracking-[0.2em] font-medium">
                     <NavLink 
-                        to="/admin-dashboard" 
+                        to="/admin-dashboard/bookings" 
                         className={({ isActive }) => isActive ? `${baseStyle} ${activeStyle}` : baseStyle}
                     >
                         Bookings
                     </NavLink>
                     
                     <NavLink 
-                        to="/admin-villas" 
+                        to="/admin-dashboard/villas" 
                         className={({ isActive }) => isActive ? `${baseStyle} ${activeStyle}` : baseStyle}
                     >
                         Villas

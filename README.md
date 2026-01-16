@@ -5,7 +5,7 @@ This is a full-stack villa booking application built with the MERN stack (MongoD
 
 ## Recent Updates
 
-- **Rate Limiting:** Added express-rate-limit with Redis (Upstash) for distributed rate limiting. Booking endpoints are limited to 5 requests every 10 seconds.
+- **Rate Limiting:** Booking endpoints are now limited to 5 requests every 10 seconds (was previously 15 minutes). Uses express-rate-limit with Redis (Upstash) for distributed rate limiting.
 - **Redis Integration:** Backend uses Upstash Redis for rate limiting.
 - **Body Parsing:** Ensured express.json() middleware is used for proper request body parsing.
 - **Error Fixes:** Addressed issues with missing dependencies and request body handling.
@@ -38,6 +38,9 @@ new Casa/
 - RESTful API for bookings and villas
 - Modern UI with Tailwind CSS
 - Responsive design
+
+## Recent Change
+- **[2026-01-15]**: Rate limit window reduced to 10 seconds for booking attempts (was 15 minutes).
 - Admin authentication with JWT & httpOnly cookies
 - Protected admin dashboard and API endpoints
 

@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 // Pages & Components
 import Home from './pages/Home';
@@ -7,6 +8,9 @@ import Villas from './pages/Villas'; // Import your new page
 import AdminLogin from './pages/AdminLogin'; // 1. Import the new page\import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard'; // Ensure this exists!
 import ProtectedRoute from './components/ProtectedRoute';
+
+
+import Bookings from './pages/Bookings';
 
 function AppContent() {
     const location = useLocation();
@@ -25,14 +29,21 @@ function AppContent() {
                     <Route path="/villas" element={<Villas />} />
                     <Route path="/admin" element={<AdminLogin />} />
                     {/* Future dashboard route */}
+                    {/* Protected Admin Shell */}
                     <Route 
                         path="/admin-dashboard" 
                         element={
                             <ProtectedRoute>
-                                <AdminDashboard />
+                                <AdminDashboard /> {/* The Sidebar & Header Layout */}
                             </ProtectedRoute>
                         } 
-                    />
+                    >
+                        {/* 1. Default tab (Redirects /admin-dashboard to /admin-dashboard/bookings) */}
+                        <Route index element={<Navigate to="bookings" replace />} />
+                        
+                        {/* 2. Sub-tabs */}
+                        <Route path="bookings" element={<Bookings />} />
+                    </Route>
                 </Routes>
             </div>
         </>

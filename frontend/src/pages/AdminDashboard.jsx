@@ -1,5 +1,6 @@
 import React from 'react';
 import AdminSidebar from '../components/AdminSidebar';
+import { Outlet } from 'react-router-dom'; // Import Outlet
 
 const AdminDashboard = () => {
     return (
@@ -17,19 +18,9 @@ const AdminDashboard = () => {
                         <span className="text-xs text-gray-400 uppercase tracking-widest">Status: Live</span>
                     </div>
                 </header>
-
-                <div className="mt-12">
-                    {/* This is where your table will go */}
-                    <div className="bg-white border border-gray-100 shadow-sm rounded-sm p-20 text-center">
-                        <div className="inline-block p-4 rounded-full bg-casa-cream mb-4">
-                            <svg className="w-8 h-8 text-casa-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                        <p className="text-casa-charcoal font-serif-display text-xl">No active bookings</p>
-                        <p className="text-gray-400 text-sm mt-2">When guests book a villa, they will appear here.</p>
-                    </div>
-                </div>
+                {/* DYNAMIC CONTENT AREA */}
+                {/* This will render Bookings or AdminVillas based on the URL */}
+                <Outlet /> {/* Render nested routes here */}
             </div>
         </div>
     );
