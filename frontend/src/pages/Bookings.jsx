@@ -14,7 +14,8 @@ const Bookings = () => {
         const { data } = await axios.get("http://localhost:5000/api/bookings", { 
           withCredentials: true 
         });
-        setBookings(data);
+        const actualBookings = Array.isArray(data) ? data : data.bookings;
+        setBookings(actualBookings || []);
       } catch (error) {
         console.error("Error fetching bookings:", error);
       } finally {
