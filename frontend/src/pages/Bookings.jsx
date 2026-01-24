@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Check, X, Calendar as CalendarIcon, User, Clock, LayoutList, Calendar } from "lucide-react";
 import axios from "axios";
 // FullCalendar Imports
@@ -11,6 +11,8 @@ const Bookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState("calendar"); // State to toggle views
+  // Ref for FullCalendar instance
+  const calendarRef = useRef(null);
   // State for controlling the calendar's anchor month (first of the pair)
   const [calendarDate, setCalendarDate] = useState(new Date());
 
@@ -101,21 +103,36 @@ const Bookings = () => {
             <div>
               <button
                 className="border rounded px-3 py-1 mr-2 hover:bg-gray-100"
-                onClick={() => setCalendarDate(prev => new Date(prev.getFullYear(), prev.getMonth() - 1, 1))}
+                onClick={() => {
+                  if (calendarRef.current) {
+                    const api = calendarRef.current.getApi();
+                    api.prev();
+                  }
+                }}
                 aria-label="Previous Month"
               >
                 &lt;
               </button>
               <button
                 className="border rounded px-3 py-1 hover:bg-gray-100"
-                onClick={() => setCalendarDate(new Date())}
+                onClick={() => {
+                  if (calendarRef.current) {
+                    const api = calendarRef.current.getApi();
+                    api.today();
+                  }
+                }}
                 aria-label="Today"
               >
                 Today
               </button>
               <button
                 className="border rounded px-3 py-1 ml-2 hover:bg-gray-100"
-                onClick={() => setCalendarDate(prev => new Date(prev.getFullYear(), prev.getMonth() + 1, 1))}
+                onClick={() => {
+                  if (calendarRef.current) {
+                    const api = calendarRef.current.getApi();
+                    api.next();
+                  }
+                }}
                 aria-label="Next Month"
               >
                 &gt;
@@ -127,6 +144,7 @@ const Bookings = () => {
             <div></div>
           </div>
           <FullCalendar
+            ref={calendarRef}
             plugins={[dayGridPlugin, interactionPlugin, multiMonthPlugin]}
             initialView="multiMonthCustom"
             views={{
@@ -138,17 +156,25 @@ const Bookings = () => {
               }
             }}
             events={calendarEvents}
-            headerToolbar={false} {/* Hide default navigation */}
+            headerToolbar={false}
             height="auto"
             contentHeight={600}
             aspectRatio={1.8}
             fixedWeekCount={false}
             dayMaxEvents={true}
+            displayEventTime={false}
             eventClick={(info) => {
               alert(`Booking for: ${info.event.title}`);
             }}
-            initialDate={calendarDate}
-            // Remove datesSet to prevent FullCalendar from overriding our anchor month
+            eventContent={(eventInfo) => (
+              <div className="px-1 py-0.5 text-[10px] rounded bg-casa-gold/80 text-white font-semibold flex items-center gap-1 overflow-hidden whitespace-nowrap">
+                <span className="uppercase">{eventInfo.event.extendedProps.villa?.name || ''}</span>
+                <span className="truncate">{eventInfo.event.title}</span>
+              </div>
+            )}
+            datesSet={(arg) => {
+              setCalendarDate(arg.start);
+            }}
           />
         </div>
       ) : (

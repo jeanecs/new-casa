@@ -50,11 +50,10 @@ const bookingSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // Basic validation to ensure check-out isn't before check-in
-bookingSchema.pre('validate', function(next) {
+bookingSchema.pre('validate', function() {
   if (this.checkIn >= this.checkOut) {
     this.invalidate('checkOut', 'Check-out date must be after check-in date');
   }
-  next();
 });
 
 module.exports = mongoose.model('Booking', bookingSchema);
