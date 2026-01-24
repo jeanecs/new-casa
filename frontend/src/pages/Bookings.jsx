@@ -5,11 +5,22 @@ import axios from "axios";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import multiMonthPlugin from '@fullcalendar/multimonth';
 
 const Bookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState("calendar"); // State to toggle views
+  // State for controlling the calendar's anchor month (first of the pair)
+  const [calendarDate, setCalendarDate] = useState(new Date());
+
+  // Helper to format the calendar title (e.g., "January 2026 – February 2026")
+  function getCalendarTitle(date) {
+    const month1 = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+    const nextMonth = new Date(date.getFullYear(), date.getMonth() + 1, 1);
+    const month2 = nextMonth.toLocaleString('default', { month: 'long', year: 'numeric' });
+    return `${month1} – ${month2}`;
+  }
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -85,21 +96,59 @@ const Bookings = () => {
       {viewMode === "calendar" ? (
         /* --- CALENDAR VIEW --- */
         <div className="bg-white p-8 border border-gray-100 shadow-sm rounded-sm admin-calendar-custom">
+          {/* Custom Calendar Navigation */}
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <button
+                className="border rounded px-3 py-1 mr-2 hover:bg-gray-100"
+                onClick={() => setCalendarDate(prev => new Date(prev.getFullYear(), prev.getMonth() - 1, 1))}
+                aria-label="Previous Month"
+              >
+                &lt;
+              </button>
+              <button
+                className="border rounded px-3 py-1 hover:bg-gray-100"
+                onClick={() => setCalendarDate(new Date())}
+                aria-label="Today"
+              >
+                Today
+              </button>
+              <button
+                className="border rounded px-3 py-1 ml-2 hover:bg-gray-100"
+                onClick={() => setCalendarDate(prev => new Date(prev.getFullYear(), prev.getMonth() + 1, 1))}
+                aria-label="Next Month"
+              >
+                &gt;
+              </button>
+            </div>
+            <div className="font-serif-display text-lg tracking-widest uppercase">
+              {getCalendarTitle(calendarDate)}
+            </div>
+            <div></div>
+          </div>
           <FullCalendar
-            plugins={[dayGridPlugin, interactionPlugin]}
-            initialView="dayGridMonth"
+            plugins={[dayGridPlugin, interactionPlugin, multiMonthPlugin]}
+            initialView="multiMonthCustom"
+            views={{
+              multiMonthCustom: {
+                type: 'multiMonth',
+                months: 2,
+                duration: { months: 2 },
+                multiMonthMaxColumns: 2
+              }
+            }}
             events={calendarEvents}
-            headerToolbar={{ left: 'prev,next today', center: 'title', right: '' }}
-            height="auto" 
-            contentHeight={600} // Limits the internal height
-            aspectRatio={1.8}   // Makes cells wider and shorter (more modern look)
-            fixedWeekCount={false} // Removes empty weeks at the bottom
-            dayMaxEvents={true}  // Prevents cells from growing too tall if multiple bookings exist
-            // -
+            headerToolbar={false} {/* Hide default navigation */}
+            height="auto"
+            contentHeight={600}
+            aspectRatio={1.8}
+            fixedWeekCount={false}
+            dayMaxEvents={true}
             eventClick={(info) => {
-              // We can make this open a modal later!
               alert(`Booking for: ${info.event.title}`);
             }}
+            initialDate={calendarDate}
+            // Remove datesSet to prevent FullCalendar from overriding our anchor month
           />
         </div>
       ) : (
