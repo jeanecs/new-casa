@@ -125,4 +125,60 @@ body {
   letter-spacing: 0.05em;
   color: #fff;
 }
+/* Ensure the capsule styling is slim enough to stack */
+.admin-calendar-container .fc-event {
+  border-radius: 4px !important;
+  margin: 0 !important;
+  padding: 4px 6px !important;
+  border: none !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+/* Force stacking behavior */
+.admin-calendar-container .fc-daygrid-day-events {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1px !important; /* Tiny gap between capsules */
+  padding: 1px !important; /* Reduce internal padding of the cell */
+  padding: 2px !important;
+}
+/* Ensure the text inside the capsule is white and small */
+.admin-calendar-container .fc-event-main {
+  color: white !important;
+  font-size: 9px !important;
+  line-height: 1.2;
+}
 
+/* Make the day headers (Sun, Mon...) look elegant */
+.fc-col-header-cell-cushion {
+  font-family: var(--font-gideon);
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  padding: 10px 0 !important;
+  color: #6b7280;
+}
+
+/* Improve the month titles (January, February) */
+.fc-multimonth-month-title {
+  font-family: var(--font-display) !important;
+  font-size: 1.2rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 20px 0 !important;
+}
+
+/* Fix day numbers to not have underlines */
+.fc-daygrid-day-number {
+  text-decoration: none !important;
+  font-family: var(--font-gideon);
+}
+
+.fc-daygrid-day-frame {
+  min-height: 80px !important; /* Ensures enough space for 3-4 stacked bookings */
+  height: auto !important;
+}
+
+/* Hide the default dot if it appears */
+.fc-daygrid-event-dot {
+  display: none !important;
+}

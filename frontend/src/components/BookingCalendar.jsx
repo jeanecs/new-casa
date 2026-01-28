@@ -3,6 +3,7 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import multiMonthPlugin from '@fullcalendar/multimonth';
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const BookingCalendarView = ({ bookings }) => {
   const calendarRef = useRef(null);
@@ -32,36 +33,54 @@ const BookingCalendarView = ({ bookings }) => {
   }));
 
   return (
-    <div className="bg-white p-8 border border-gray-100 shadow-sm rounded-sm">
+    <div className="bg-white p-8 border border-gray-100 shadow-sm rounded-sm admin-calendar-container">
       <div className="flex items-center justify-between mb-8">
-        <div className="flex gap-2">
-          <button onClick={() => handleNav('prev')} className="border rounded px-4 py-1 hover:bg-gray-50">&lt;</button>
-          <button onClick={() => handleNav('today')} className="border rounded px-4 py-1 hover:bg-gray-50 text-[10px] font-bold uppercase">Today</button>
-          <button onClick={() => handleNav('next')} className="border rounded px-4 py-1 hover:bg-gray-50">&gt;</button>
+        <div className="flex items-center gap-1">
+          <button onClick={() => handleNav('prev')} className="p-2 border border-gray-100 rounded-sm hover:bg-gray-50 transition-colors text-gray-400">
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+          <button onClick={() => handleNav('today')} className="px-4 py-2 border border-gray-100 rounded-sm hover:bg-gray-50 text-[10px] font-bold uppercase tracking-widest text-gray-500">
+            Today
+          </button>
+          <button onClick={() => handleNav('next')} className="p-2 border border-gray-100 rounded-sm hover:bg-gray-50 transition-colors text-gray-400">
+            <ChevronRight className="w-4 h-4" />
+          </button>
         </div>
-        <div className="font-serif-display text-lg tracking-widest uppercase text-casa-charcoal">
+
+        <div className="font-display text-lg tracking-[0.2em] uppercase text-casa-charcoal text-center">
           {getCalendarTitle(calendarDate)}
         </div>
-        <div className="w-24"></div>
+        <div className="w-[120px] hidden lg:block"></div>
       </div>
 
-      <FullCalendar
-        ref={calendarRef}
-        plugins={[dayGridPlugin, interactionPlugin, multiMonthPlugin]}
-        initialView="multiMonthCustom"
-        views={{ multiMonthCustom: { type: 'multiMonth', duration: { months: 2 }, multiMonthMaxColumns: 2 } }}
-        events={events}
-        headerToolbar={false}
-        height="auto"
-        dayMaxEvents={false} // Stack events vertically
-        displayEventTime={false}
-        eventContent={(info) => (
-          <div className="px-2 py-1 mb-0.5 text-[10px] bg-casa-gold/10 border-l-2 border-casa-gold text-casa-charcoal font-medium truncate">
-            <span className="font-bold uppercase opacity-60 mr-1">{info.event.extendedProps.villa?.name}:</span>
-            {info.event.title}
-          </div>
-        )}
-      />
+      <div className="admin-calendar-custom">
+        <FullCalendar
+          ref={calendarRef}
+          plugins={[dayGridPlugin, interactionPlugin, multiMonthPlugin]}
+          initialView="multiMonthCustom"
+            views={{ 
+                multiMonthCustom: { 
+                type: 'multiMonth', 
+                duration: { months: 2 }, 
+                multiMonthMaxColumns: 2 
+                } 
+            }}
+            events={events}
+            height="auto"           // Allows the calendar to grow vertically
+            dayMaxEvents={false}    // Crucial: Disables the "+more" popup
+            displayEventTime={false}
+            eventContent={(info) => (
+                <div className="flex flex-col px-1">
+                <span className="text-[6px] font-bold uppercase tracking-tighter opacity-70">
+                    {info.event.extendedProps.villa?.name || "Villa"}
+                </span>
+                <span className="truncate text-[9px] font-bold uppercase">
+                    {info.event.title}
+                </span>
+                </div>
+            )}
+            />
+      </div>
     </div>
   );
 };
